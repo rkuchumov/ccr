@@ -1,17 +1,21 @@
 import React, { Component, PropTypes } from 'react';
-
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import classnames from 'classnames';
 
-export default class Channel extends Component {
+import { Captions } from '../../api/captions.js';
+
+import Caption from '../components/Caption.jsx';
+
+class Channel extends Component {
   componentDidMount() {
     this.refs.tab.setAttribute('uk-tab', '');
     this.refs.editChannel.setAttribute('uk-toggle', '');
   }
 
   renderCaptions() {
-
+    return this.props.captions.map((caption) => {
+      return <Caption key={caption._id} caption={caption} />;
+    });
   }
 
   render() {
@@ -49,5 +53,20 @@ export default class Channel extends Component {
 Channel.propTypes = {
   channel: PropTypes.object.isRequired,
   onChannelEdit: PropTypes.func.isRequired,
+  captions: PropTypes.array.isRequired,
 };
 
+export default createContainer((props) => {
+  Meteor.subscribe('captions', props.channel._id);
+
+  var captions = Captions.find({
+    channel: props.channel._id
+  }, {
+    limit: 4,
+    sort: {
+      time: -1
+    }
+  }).fetch().reverse();
+
+  return { captions: captions };
+}, Channel);

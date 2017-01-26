@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { Random } from 'meteor/random';
 
-export default class InputText extends Component {
+export default class Input extends Component {
   constructor(props) {
     super(props);
 
@@ -62,10 +62,11 @@ export default class InputText extends Component {
   }
 }
 
-InputText.propTypes = {
+Input.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   name: PropTypes.string,
+  row: PropTypes.string,
   type: PropTypes.string,
 };
 
