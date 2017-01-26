@@ -5,11 +5,6 @@ import { check } from 'meteor/check';
 export const Channels = new Mongo.Collection('channels');
 
 Channels.schema = new SimpleSchema({
-  _id: {
-    type: String,
-    label: "Channel ID",
-    max: 32
-  },
   title: {
     type: String,
     label: "Title",
@@ -35,7 +30,8 @@ Channels.schema = new SimpleSchema({
     optional: true,
   },
   tags: {
-    type: [String],
+    type: String,
+    // type: [String],
     label: "Tags",
     optional: true,
   },
@@ -59,19 +55,24 @@ Meteor.methods({
   'channel.upsert'(channel) {
     // TODO: replace with insert and update procedures
     Channels.upsert(channel._id, {
-      title:        channel.title,
-      location:     channel.location,
-      language:     channel.language,
-      website:      channel.website,
-      tags:         channel.tags,
-      description:  channel.description,
-      createdAt:    new Date(),
-      updatedAt:    new Date(),
+      $set: {
+        title:        channel.title,
+        location:     channel.location,
+        language:     channel.language,
+        website:      channel.website,
+        tags:         channel.tags,
+        description:  channel.description,
+        createdAt:    new Date(),
+        updatedAt:    new Date(),
+      }
     }, (error, result) => {
       console.log("channel.upsert");
-      console.log("result", result);
-      console.log("error", error);
-      console.log(Channels.simpleSchema().namedContext().validationErrors());
+      console.log("\tresult:", result);
+      console.log("\terror:", error);
+
+      if (error) {
+        console.log(Channels.simpleSchema().namedContext().validationErrors());
+      }
     });
   },
 
