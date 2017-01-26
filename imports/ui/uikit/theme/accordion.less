@@ -1,0 +1,75 @@
+//
+// Component: Accordion
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+//
+// New
+//
+
+@accordion-icon-color:                         @global-color;
+
+
+// Component
+// ========================================================================
+
+.hook-accordion() {}
+
+
+// Item
+// ========================================================================
+
+.hook-accordion-item() {}
+
+
+// Title
+// ========================================================================
+
+.hook-accordion-title() {
+
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        width: (@accordion-title-line-height * 1em);
+        height: (@accordion-title-line-height * 1em);
+        float: right;
+        .svg-fill("../../../dist/images/accordion-close.svg", "#000", @accordion-icon-color);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+
+    .uk-open > &::after { .svg-fill("../../../dist/images/accordion-open.svg", "#000", @accordion-icon-color); }
+
+}
+
+
+// Content
+// ========================================================================
+
+.hook-accordion-content() {}
+
+
+// Miscellaneous
+// ========================================================================
+
+.hook-accordion-misc() {}
+
+// Inverse
+// ========================================================================
+
+.hook-inverse-accordion-item() {}
+
+.hook-inverse-accordion-title() {}
+
+.hook-inverse() {
+
+    .uk-accordion-title::after { .svg-fill("../../../dist/images/accordion-close.svg", "#000", @inverse-global-color); }
+
+    .uk-open > .uk-accordion-title::after { .svg-fill("../../../dist/images/accordion-open.svg", "#000", @inverse-global-color); }
+
+}
