@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 
 import Input from '../components/Input.jsx';
 
-import classnames from 'classnames';
-
 export default class ChannelModal extends Component {
   constructor(props) {
     super(props);

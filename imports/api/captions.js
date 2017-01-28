@@ -8,9 +8,9 @@ Captions.schema = new SimpleSchema({
     type: String,
     label: "Channel ID",
   },
-  time: {
+  start: {
     type: Number,
-    label: "Time",
+    label: "Start time",
   },
   duration: {
     type: Number,
@@ -34,3 +34,26 @@ if (Meteor.isServer) {
   });
 }
 
+Meteor.methods({
+  'captions.upsert'(caption) {
+    Captions.upsert({
+      start:    caption.start,
+      channel:  caption.channel
+    }, {
+      $set: {
+        duration:  caption.duration,
+        mode:      caption.mode,
+        text:      caption.text
+      }
+    }, (error, result) => {
+      console.log("captions.upsert");
+      console.log("\tresult:", result);
+      console.log("\terror:", error);
+
+      if (error) {
+        console.log(Channels.simpleSchema().namedContext().validationErrors());
+      }
+    });
+  },
+
+});
