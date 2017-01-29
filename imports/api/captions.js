@@ -29,6 +29,8 @@ Captions.schema = new SimpleSchema({
 Captions.attachSchema(Captions.schema);
 
 if (Meteor.isServer) {
+  Captions._ensureIndex({start: -1, channel: 1});
+
   Meteor.publish('captions', function captionsPublication(channelId) {
     return Captions.find({channel: channelId});
   });
