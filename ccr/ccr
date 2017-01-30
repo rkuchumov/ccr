@@ -19,4 +19,6 @@ process.on('SIGINT', () => {
 	log.info('SIGINT recieved');
 	cceio.terminate();
 	connection.disconnect();
+
+	process.exit();
 })

@@ -10,6 +10,7 @@ module.exports = function() {
 	args.option('-s, --stream [path]', 'Video input stream file.');
 	args.option('--no-bin', 'If specified BIN data wont be extracted.');
 	args.option('--tmpdir [path]', 'Directory for temporary files.', '/tmp');
+	args.option('--autorestart [seconds]', 'Restart CCExtractor after specified number of seconds', '2');
 
 	// TODO: implement
 	// args.option('--cce-txt-args [args]', 'CCExtractor(BIN) additional arguments');
@@ -43,6 +44,7 @@ module.exports = function() {
 	config.cce.binArgs = args.cceBinArgs;
 	config.cce.txtArgs = args.cceTxtArgs;
 	config.cce.tmpDir  = args.tmpdir;
+	config.cce.restart = args.autorestart;
 
 	config.minPrefixDistance  = 3;
 	config.maxScreenLines = 4;
