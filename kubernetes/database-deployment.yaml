@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: database-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ccr
+        module: database
+    spec:
+      volumes:
+      - name: atata
+        persistentVolumeClaim:
+          claimName: database-pvc
+      containers:
+      - name: database
+        image: mongo:latest
+        ports:
+        - name: database
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+        - name: atata
+          mountPath: /data/db/

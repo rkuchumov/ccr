@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ccr
+        module: app
+    spec:
+      containers:
+      - name: database
+        image: rkuchumov/ccr:latest
+        ports:
+        - name: app
+          containerPort: 80
+          hostPort: 80
+        env:
+        - name: PORT
+          value: '80'
+        - name: MONGO_URL
+          value: mongodb://database-service/ccr
+        - name: ROOT_URL
+          value: #ATATA
