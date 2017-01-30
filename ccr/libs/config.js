@@ -10,14 +10,15 @@ module.exports = function() {
 	args.option('-s, --stream [path]', 'Video input stream file.');
 	args.option('--no-bin', 'If specified BIN data wont be extracted.');
 	args.option('--tmpdir [path]', 'Directory for temporary files.', '/tmp');
-	args.option('--autorestart [seconds]', 'Restart CCExtractor after specified number of seconds', '2');
+	args.option('--autorestart [seconds]', 'Restart CCExtractor and server connection after specified ' +
+		'number of seconds (0 means no restart)', '2');
 
 	// TODO: implement
 	// args.option('--cce-txt-args [args]', 'CCExtractor(BIN) additional arguments');
 	// args.option('--cce-bin-args [args]', 'CCExtractor(BIN) additional arguments');
 
 	// Connection
-	args.option('-D, --destination [address]', 'Destination address', 'ws://localhost:3000/websocket');
+	args.option('-D, --destination [address]', 'Destination address', 'localhost:3000');
 	args.option('-U, --login [user]', 'User login.');
 	args.option('-P, --password [password]', 'User password.');
 	args.option('-C, --channel [id]', 'Channel ID.');
@@ -44,13 +45,13 @@ module.exports = function() {
 	config.cce.binArgs = args.cceBinArgs;
 	config.cce.txtArgs = args.cceTxtArgs;
 	config.cce.tmpDir  = args.tmpdir;
-	config.cce.restart = args.autorestart;
 
 	config.minPrefixDistance  = 3;
 	config.maxScreenLines = 4;
+	config.restart = args.autorestart;
 
 	config.conn = {};
-	config.conn.destination = args.destination;
+	config.conn.destination = 'ws://' + args.destination + '/websocket';
 	config.conn.user        = args.user;
 	config.conn.password    = args.password;
 	config.conn.channel     = args.channel;

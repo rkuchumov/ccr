@@ -38,11 +38,11 @@ function spawn(options) {
 
 			log.error('CCExtractor (pid ' + this.handle.pid + ') exited with code ' + code);
 
-			if (config.cce.restart > 0) {
+			if (config.restart > 0) {
 				log.debug('Restarting (old pid ' + this.handle.pid + ')');
-				console.log(config.cce.restart);
+				console.log(config.restart);
 
-				setTimeout(this._spawn, config.cce.restart * 1000);
+				setTimeout(this._spawn, config.restart * 1000);
 			} else {
 				this.killed = true;
 			}

@@ -24,13 +24,18 @@ function connect() {
 
 		ddp = new DDP({
 			endpoint: config.conn.destination,
-			SocketConstructor: WebSocket
+			SocketConstructor: WebSocket,
+			autoReconnect: config.restart > 0,
+			reconnectInterval: config.restart * 1000
 		});
 
 		ddp.on("connected", () => {
 			log.info('Connected');
-			// TODO: handle error
 			resolve();
+		});
+
+		ddp.on("disconnected", () => {
+			log.warn('Connection is lost');
 		});
 
 		ddp.on("result", message => {
