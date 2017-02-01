@@ -6,6 +6,7 @@ var log = {};
 var config = {};
 
 var ddp = {};
+var connected = false;
 
 module.exports = function(config_, log_) {
 	config = config_;
@@ -30,11 +31,13 @@ function connect() {
 		});
 
 		ddp.on("connected", () => {
+			connected = true;
 			log.info('Connected');
 			resolve();
 		});
 
 		ddp.on("disconnected", () => {
+			connected = false;
 			log.warn('Connection is lost');
 		});
 
@@ -45,10 +48,15 @@ function connect() {
 }
 
 function disconnect() {
+	connected = false;
+
 	ddp.disconnect();
 }
 
 function sendCaptions(captions) {
+	if (!connected) {
+		return;
+	}
 
 	if (!(captions instanceof Array)) {
 		captions = [captions];

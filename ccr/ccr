@@ -9,6 +9,7 @@ const screen = require('./libs/screen.js')(config, log);
 connection.connect().then(() => {
 	cceio.initialize(
 		(caption) => {
+			caption.start = Date.now();
 			var cc = screen.update(caption);
 			connection.sendCaptions(cc);
 		}

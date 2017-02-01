@@ -130,7 +130,6 @@ function parseTxtLine(line, callback) {
 		text += splitted[i];
 
 	var caption = {
-		start:     start,
 		duration:  duration,
 		mode:      splitted[2],
 		text:      text
