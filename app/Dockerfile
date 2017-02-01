@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:4.7
 
 MAINTAINER Ruslan Kuchumov <kuchumovri@gmail.com>
 

@@ -32,7 +32,15 @@ if (Meteor.isServer) {
   Captions._ensureIndex({start: -1, channel: 1});
 
   Meteor.publish('captions', function captionsPublication(channelId) {
-    return Captions.find({channel: channelId});
+	  return Captions.find({
+		  channel: channelId
+	  }, {
+		  limit: 4,
+		  sort: {
+			  start: -1
+		  }
+	  });
+
   });
 }
 
@@ -48,7 +56,7 @@ Meteor.methods({
         text:      caption.text
       }
     }, (error, result) => {
-      console.log("captions.upsert");
+      console.log("captions.upsert", caption);
       console.log("\tresult:", result);
       console.log("\terror:", error);
 
