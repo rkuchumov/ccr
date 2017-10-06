@@ -17,11 +17,9 @@
   },
   "homepage": "https://github.com/rkuchumov/ccr-client#readme",
   "dependencies": {
-    "buffer-split": "^1.0.0",
     "commander": "^2.9.0",
-    "ddp.js": "^2.2.0",
     "intel": "^1.1.2",
     "levenshtein": "^1.0.5",
-    "ws": "^1.1.1"
+    "zeromq": "^4.6.0"
   }
 }

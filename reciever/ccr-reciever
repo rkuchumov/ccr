@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const config = require('./libs/config.js')();
+const log = require('./libs/log.js')(config);
+const connection = require('./libs/connection.js')(config, log);
+
+connection.connect((message) => {
+	console.log('onCaptions', message);
+});
+
+// connection.connect().then(() => {
+// 	cceio.initialize(
+// 		(caption) => {
+// 			caption.start = Date.now();
+// 			var cc = screen.update(caption);
+// 			connection.sendCaptions(cc);
+// 		}
+// 	);
+// });
+//

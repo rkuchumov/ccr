@@ -1,9 +1,6 @@
 const args = require('commander');
 
 module.exports = function() {
-
-	args.version('ccr 1.0.0');
-
 	// CCExtractor
 	args.option('-e, --ccextractor [path]', 'CCExtractor execution command', 'ccextractor');
 	args.option('-u, --udp [address]', 'Video stream input UDP address.');
@@ -18,16 +15,12 @@ module.exports = function() {
 	// args.option('--cce-bin-args [args]', 'CCExtractor(BIN) additional arguments');
 
 	// Connection
-	args.option('-D, --destination [address]', 'Destination address', 'localhost:3000');
-	args.option('-U, --login [user]', 'User login.');
-	args.option('-P, --password [password]', 'User password.');
+	args.option('-D, --destination [address]', 'ZMQ server address', 'tcp://127.0.0.1:5000');
 	args.option('-C, --channel [id]', 'Channel ID.');
-	args.option('--bin-size', 'Number of bytes of BIN data to be send in one request.');
-	args.option('--txt-max-size', 'Max number of bytes to be send in a single TXT request.');
 
 	// Logs
+	args.option('--silent, --quiet', 'Do not produce any output');
 	args.option('-v, --verbose', 'Produce verbose output.');
-	args.option('--silent, --quiet', 'Don\'t produce any output');
 	args.option('--debug', 'Produce debug output.');
 	args.option('--logfile [path]', 'Log file path');
 
@@ -51,12 +44,11 @@ module.exports = function() {
 	config.restart = args.autorestart;
 
 	config.conn = {};
-	config.conn.destination = 'ws://' + args.destination + '/websocket';
-	config.conn.user        = args.user;
-	config.conn.password    = args.password;
+	config.conn.destination = args.destination;
 	config.conn.channel     = args.channel;
 	config.conn.binSize     = args.binSize;
 	config.conn.txtMaxSize  = args.txtMaxSize;
+	config.conn.monitoring  = 1000;
 
 	config.log = {};
 	config.log.verbose  = args.verbose;

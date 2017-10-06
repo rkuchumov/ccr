@@ -1,0 +1,24 @@
+{
+  "name": "ccr-client",
+  "version": "1.0.0",
+  "description": "CCExtractor Repository client",
+  "main": "ccr",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rkuchumov/ccr-client.git"
+  },
+  "author": "Ruslan Kuchumov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rkuchumov/ccr-client/issues"
+  },
+  "homepage": "https://github.com/rkuchumov/ccr-client#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "intel": "^1.1.2",
+    "zeromq": "^4.6.0"
+  }
+}

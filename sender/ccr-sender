@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+const config = require('./libs/config.js')();
+const log = require('./libs/log.js')(config);
+const connection = require('./libs/connection.js')(config, log);
+const cceio = require('./libs/cceio.js')(config, log);
+const screen = require('./libs/screen.js')(config, log);
+
+connection.connect().then(() => {
+	var caption =  {
+		duration: 10,
+		mode: 'RU',
+		text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod',
+	};
+
+	caption.start = Date.now();
+	caption.channel = config.conn.channel;
+
+	var cc = screen.update(caption);
+
+	connection.sendCaptions(cc);
+});
+
+// connection.connect().then(() => {
+// 	cceio.initialize(
+// 		(caption) => {
+// 			caption.start = Date.now();
+// 			var cc = screen.update(caption);
+// 			connection.sendCaptions(cc);
+// 		}
+// 	);
+// });
+
