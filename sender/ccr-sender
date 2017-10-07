@@ -7,27 +7,14 @@ const cceio = require('./libs/cceio.js')(config, log);
 const screen = require('./libs/screen.js')(config, log);
 
 connection.connect().then(() => {
-	var caption =  {
-		duration: 10,
-		mode: 'RU',
-		text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod',
-	};
+	cceio.initialize(
+		(caption) => {
+			caption.start = Date.now();
+			caption.channel = config.conn.channel;
 
-	caption.start = Date.now();
-	caption.channel = config.conn.channel;
-
-	var cc = screen.update(caption);
-
-	connection.sendCaptions(cc);
+			var cc = screen.update(caption);
+			connection.sendCaptions(cc);
+		}
+	);
 });
-
-// connection.connect().then(() => {
-// 	cceio.initialize(
-// 		(caption) => {
-// 			caption.start = Date.now();
-// 			var cc = screen.update(caption);
-// 			connection.sendCaptions(cc);
-// 		}
-// 	);
-// });
 

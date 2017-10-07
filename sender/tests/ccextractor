@@ -1,0 +1,69 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var readline = require('readline');
+
+var config = {
+	input: __dirname + '/formatted.txt',
+	minDelay: 100,
+	maxDelay: 800,
+}
+
+var rd = readline.createInterface({
+    input: fs.createReadStream(config.input),
+    console: false
+});
+
+function parseLine(line) {
+	console.assert(typeof(line) == 'string', 'String is expected');
+
+	var splitted = line.split('|');
+
+	if (splitted.length != 3) {
+		console.assert('Can not split CC line: ' + line);
+		return;
+	}
+
+	return {
+		duration:  parseInt(splitted[0]),
+		mode:      splitted[1],
+		text:      splitted[2]
+	}
+}
+
+var captions = [];
+var current = 0;
+
+function next() {
+	var cc = captions[current];
+
+	if (cc.duration < config.minDelay)
+		cc.duration = config.minDelay;
+	if (cc.duration > config.maxDelay)
+		cc.duration = config.maxDelay;
+
+	var start = Date.now();
+	var end = start + cc.duration;
+
+	start = (start/1000).toFixed(3);
+	end   = (end/1000).toFixed(3);
+
+	var str = [start, end, cc.mode, cc.text].join('|');
+
+	console.log(str);
+
+	current++;
+	current %= captions.length;
+
+	setTimeout(next, cc.duration);
+}
+
+rd.on('line', (line) => {
+	captions.push(parseLine(line));
+});
+
+rd.on('close', () => {
+	next();
+})
+
+

@@ -19,6 +19,7 @@
   "dependencies": {
     "commander": "^2.9.0",
     "intel": "^1.1.2",
+    "mongodb": "^2.2.31",
     "zeromq": "^4.6.0"
   }
 }

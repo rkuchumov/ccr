@@ -94,6 +94,11 @@ function parseTxtOutput(buffer, callback) {
 
 function parseTxtTime(str) {
 	var splitted = str.split(',');
+
+	if (splitted.length != 2) {
+		splitted = str.split('.');
+	}
+
 	if (splitted.length != 2) {
 		log.warn('Can\'t parse CC time string: ' + str);
 		return null;
