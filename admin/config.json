@@ -1,0 +1,7 @@
+{
+	"endpoint": "mongodb://127.0.0.1:3001/meteor",
+	"collection": "channels",
+	"inspect": {
+		"colors": true
+	}
+}

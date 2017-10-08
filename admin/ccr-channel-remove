@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var utils = require('util');
+var mongo = require('mongodb').MongoClient;
+var args = require('commander');
+
+var configFile = __dirname + '/config.json';
+var config = JSON.parse(fs.readFileSync(configFile));
+
+args.option('-i, --id [ID]', 'Channel ID to remove');
+args.parse(process.argv);
+
+if (!args.id) {
+	console.error("Channel ID (-i) is not specified");
+}
+
+var remove = (err, db) => {
+	if (err) {
+		console.error("Can not connect to MongoDB server: ", err);
+		return;
+	}
+
+	var collection = db.collection(config.collection);
+
+	collection.removeOne({_id: args.id}, (err, r) => {
+		if (err) {
+			console.error("Can not remove item: ", err);
+			db.close();
+			return;
+		}
+
+		if (r.result.n)
+			console.log('Done');
+		else
+			console.log('Nothing is removed');
+
+		db.close();
+	});
+}
+
+mongo.connect(config.endpoint, remove);

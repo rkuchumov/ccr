@@ -2,11 +2,11 @@
 
 const config = require('./libs/config.js')();
 const log = require('./libs/log.js')(config);
-const connection = require('./libs/connection.js')(config, log);
+const sender = require('./libs/sender.js')(config, log);
 const db = require('./libs/db.js')(config, log);
 
 db.connect().then(() => {
-	connection.connect((cc) => {
+	sender.listen((cc) => {
 		db.addCaption(cc);
 	});
 });

@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var utils = require('util');
+var mongo = require('mongodb').MongoClient;
+
+var configFile = __dirname + '/config.json';
+var config = JSON.parse(fs.readFileSync(configFile));
+
+var describe = (err, docs) => {
+	if (err) {
+		console.error("Can not describe item: ", err);
+		return;
+	}
+
+	var pretty = utils.inspect(docs, config.inspect);
+
+	console.log(pretty);
+}
+
+var list = (err, db) => {
+	if (err) {
+		console.error("Can not connect to MongoDB server: ", err);
+		return;
+	}
+
+	db.collection(config.collection).find({}).toArray(describe);
+
+	db.close();
+}
+
+mongo.connect(config.endpoint, list);

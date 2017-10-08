@@ -2,18 +2,18 @@
 
 const config = require('./libs/config.js')();
 const log = require('./libs/log.js')(config);
-const connection = require('./libs/connection.js')(config, log);
+const reciever = require('./libs/reciever.js')(config, log);
 const cceio = require('./libs/cceio.js')(config, log);
 const screen = require('./libs/screen.js')(config, log);
 
-connection.connect().then(() => {
+reciever.connect().then(() => {
 	cceio.initialize(
 		(caption) => {
 			caption.start = Date.now();
 			caption.channel = config.conn.channel;
 
 			var cc = screen.update(caption);
-			connection.sendCaptions(cc);
+			reciever.sendCaptions(cc);
 		}
 	);
 });

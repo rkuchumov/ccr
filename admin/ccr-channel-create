@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var utils = require('util');
+var mongo = require('mongodb').MongoClient;
+var args = require('commander');
+
+var configFile = __dirname + '/config.json';
+var config = JSON.parse(fs.readFileSync(configFile));
+
+args.option('-i, --id [ID]', 'New channel ID');
+args.option('-t, --title [title]', 'New channel title');
+args.parse(process.argv);
+
+if (!args.id || !args.title) {
+	console.error("Channel ID (-i) or title (-t) are not specified");
+}
+
+var create = (err, db) => {
+	if (err) {
+		console.error("Can not connect to MongoDB server: ", err);
+		return;
+	}
+
+	var channel = {
+		_id: args.id,
+		title: args.title,
+		createdAt: new Date(),
+		updatedAt: new Date()
+	}
+
+	var collection = db.collection(config.collection);
+
+	collection.insertOne(channel, (err, r) => {
+		if (err) {
+			console.error("Can not describe item: ", err);
+			db.close();
+			return;
+		}
+
+		console.log("ID: " + r.insertedId);
+
+		db.close();
+	});
+}
+
+mongo.connect(config.endpoint, create);

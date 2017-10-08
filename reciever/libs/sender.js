@@ -9,7 +9,7 @@ module.exports = function(config_, log_) {
 	log = log_;
 
 	return {
-		connect: connect,
+		listen: listen,
 	}
 }
 
@@ -55,7 +55,7 @@ function bindMonitoringEvents(socket) {
 	});
 }
 
-function connect(onCaptions) {
+function listen(onCaptions) {
 	return new Promise((resolve, reject) => {
 		if (config.log.debug) {
 			socket.monitor(config.conn.monitoring, 0);
