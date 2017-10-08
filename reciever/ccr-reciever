@@ -3,18 +3,11 @@
 const config = require('./libs/config.js')();
 const log = require('./libs/log.js')(config);
 const connection = require('./libs/connection.js')(config, log);
+const db = require('./libs/db.js')(config, log);
 
-connection.connect((message) => {
-	console.log('onCaptions', message);
+db.connect().then(() => {
+	connection.connect((cc) => {
+		db.addCaption(cc);
+	});
 });
 
-// connection.connect().then(() => {
-// 	cceio.initialize(
-// 		(caption) => {
-// 			caption.start = Date.now();
-// 			var cc = screen.update(caption);
-// 			connection.sendCaptions(cc);
-// 		}
-// 	);
-// });
-//
