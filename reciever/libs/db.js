@@ -5,6 +5,7 @@ var mongo = require('mongodb').MongoClient;
 var log = {};
 var config = {};
 var handle = null;
+var captions = null;
 
 module.exports = function(config_, log_) {
 	config = config_;
@@ -30,6 +31,11 @@ function connect() {
 
 			log.info("Connected correctly to MongoDB server.");
 			handle = db;
+
+			captions = handle.collection('captions');
+
+			handle.ensureIndex('start_-1_channel_1', {start: -1, channel: 1});
+
 			resolve();
 		}); // TODO: handle exception on error
 	})
@@ -49,7 +55,6 @@ function addCaption(cc) {
 		return;
 
 	log.debug('Inserting ', JSON.stringify(cc));
-	var captions = handle.collection('captions');
 
 	captions.updateOne(
 		{

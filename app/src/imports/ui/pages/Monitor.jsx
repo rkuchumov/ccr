@@ -5,7 +5,6 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Channels } from '../../api/channels.js';
 
-import ChannelModal from '../components/ChannelModal.jsx';
 import Channel from '../components/Channel.jsx';
 
 class Monitor extends Component {
@@ -13,7 +12,6 @@ class Monitor extends Component {
   componentDidMount() {
     this.refs.grid.setAttribute('uk-grid', '');
     this.refs.grid.setAttribute('uk-sortable', 'handle: .sortable-handle');
-    this.refs.newChannel.setAttribute('uk-toggle', 'target: #channel-modal');
   }
 
   renderChannels() {
@@ -31,18 +29,9 @@ class Monitor extends Component {
   render() {
     return (
       <div className="uk-container uk-container-expand">
-        <div className="uk-margin-top uk-width-1">
-          <a ref="newChannel"
-            className="uk-button uk-button-primary uk-button-small"
-            onClick={() => {this.refs.channelModal.setChannel(null);}}
-            href="#">
-            New Channel
-          </a>
-        </div>
         <div ref="grid" className="channels-grid uk-flex-center uk-grid-small uk-margin-top">
           {this.renderChannels()}
         </div>
-        <ChannelModal ref="channelModal" />
       </div>
     );
   }

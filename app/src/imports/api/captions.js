@@ -43,27 +43,3 @@ if (Meteor.isServer) {
 
   });
 }
-
-Meteor.methods({
-  'captions.upsert'(caption) {
-    Captions.upsert({
-      start:    caption.start,
-      channel:  caption.channel
-    }, {
-      $set: {
-        duration:  caption.duration,
-        mode:      caption.mode,
-        text:      caption.text
-      }
-    }, (error, result) => {
-      console.log("captions.upsert", caption);
-      console.log("\tresult:", result);
-      console.log("\terror:", error);
-
-      if (error) {
-        console.log(Channels.simpleSchema().namedContext().validationErrors());
-      }
-    });
-  },
-
-});
