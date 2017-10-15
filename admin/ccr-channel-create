@@ -14,6 +14,7 @@ args.parse(process.argv);
 
 if (!args.id || !args.title) {
 	console.error("Channel ID (-i) or title (-t) are not specified");
+	process.exit();
 }
 
 var create = (err, db) => {

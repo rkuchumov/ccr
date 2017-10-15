@@ -34,7 +34,7 @@ function connect() {
 
 			captions = handle.collection('captions');
 
-			handle.ensureIndex('start_-1_channel_1', {start: -1, channel: 1});
+			captions.ensureIndex({start: -1, channel: 1});
 
 			resolve();
 		}); // TODO: handle exception on error

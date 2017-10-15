@@ -1,5 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 set -x
+
+rm -rf bundle
 
 cd src/
 npm install --production

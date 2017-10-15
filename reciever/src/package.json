@@ -4,7 +4,7 @@
   "description": "CCExtractor Repository client",
   "main": "ccr",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./ccr-reciever"
   },
   "repository": {
     "type": "git",
