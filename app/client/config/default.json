@@ -1,0 +1,6 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "ws": "ws://localhost:3031/",
+  "public": "../public/"
+}
