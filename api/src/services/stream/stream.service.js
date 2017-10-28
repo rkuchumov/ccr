@@ -1,7 +1,7 @@
-// Initializes the `captions` service on path `/captions`
+// Initializes the `stream` service on path `/stream`
 const createService = require('feathers-mongodb');
-const hooks = require('./captions.hooks');
-const filters = require('./captions.filters');
+const hooks = require('./stream.hooks');
+const filters = require('./stream.filters');
 
 module.exports = function () {
   const app = this;
@@ -10,13 +10,13 @@ module.exports = function () {
   const options = { paginate };
 
   // Initialize our service with any options it requires
-  app.use('/captions', createService(options));
+  app.use('/stream', createService(options));
 
   // Get our initialized service so that we can register hooks and filters
-  const service = app.service('captions');
+  const service = app.service('stream');
 
   mongoClient.then(db => {
-    var collection = db.collection('captions');
+    var collection = db.collection('stream');
     service.Model = collection;
 
     var latest = collection.find()

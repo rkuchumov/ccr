@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var utils = require('util');
+var mongo = require('mongodb').MongoClient;
+
+var configFile = __dirname + '/config.json';
+var config = JSON.parse(fs.readFileSync(configFile));
+
+var init = (err, db) => {
+	if (err) {
+		console.error("Can not connect to MongoDB server: ", err);
+		throw err;
+	}
+
+	var collection = db.collection(config.collections.stream.name);
+	collection.drop((err, collection) => {
+		if (err) {
+			console.error("Can not drop captions collection");
+			throw err;
+		}
+
+		db.close();
+		console.log("Done.");
+	})
+}
+
+mongo.connect(config.endpoint, init);

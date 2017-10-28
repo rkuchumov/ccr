@@ -36,13 +36,21 @@ class Channel extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.channel);
     this.refs.tab.setAttribute('uk-tab', '');
+
+    const captions = client.service('captions');
+    captions.find({
+      query: {
+        channel: this.props.channel._id,
+        $sort: { started: -1 },
+        $limit: 4
+      }
+    }).then(items => this.setState({screen: items.data}));
 
     // XXX: handling all events is not efficient
     // TODO: implement pub/sub pattern
-    const captions = client.service('captions');
-    captions.on('created', cc => this.onCaptionsAdded(cc));
+    const stream = client.service('stream');
+    stream.on('created', cc => this.onCaptionsAdded(cc));
   }
 
   renderCaptions() {

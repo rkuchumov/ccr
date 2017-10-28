@@ -8,25 +8,33 @@ var configFile = __dirname + '/config.json';
 var config = JSON.parse(fs.readFileSync(configFile));
 
 var init = (err, db) => {
-	if (err) {
-		console.error("Can not connect to MongoDB server: ", err);
-		throw err;
-	}
+  if (err) {
+    console.error("Can not connect to MongoDB server: ", err);
+    throw err;
+  }
 
-	db.createCollection(
-		config.collections.captions.name,
-		config.collections.captions.options,
-		(err, collection) => {
-			if (err) {
-				console.error("Can not create captions collection: ", err);
-				throw err;
-			}
+  db.createCollection(
+    config.collections.captions.name,
+    config.collections.captions.options,
+    (err, collection) => {
+      if (err) {
+        console.error("Can not create captions collection: ", err);
+        throw err;
+      }
 
-			db.close();
+      collection.ensureIndex(config.collections.captions.index,
+        (err, c) => {
+          if (err) {
+            console.error("Can not create index: ", err);
+            throw err;
+          }
+          db.close();
+        }
+      );
 
-			console.log("Done.");
-		}
-	);
+      console.log("Done.");
+    }
+  );
 }
 
 mongo.connect(config.endpoint, init);

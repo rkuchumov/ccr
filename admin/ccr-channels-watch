@@ -51,7 +51,7 @@ var watch = (err, db) => {
 		return;
 	}
 
-	var collection = db.collection(config.collections.captions.name);
+	var collection = db.collection(config.collections.stream.name);
 
 	var latest = collection
 		.find({channel: args.id})
