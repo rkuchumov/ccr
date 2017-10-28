@@ -1,49 +1,15 @@
-const path = require('path');
-const compress = require('compression');
-const cors = require('cors');
-const helmet = require('helmet');
-const bodyParser = require('body-parser');
+import io from 'socket.io-client';
+import feathers from 'feathers/client';
+import hooks from 'feathers-hooks';
+import socketio from 'feathers-socketio/client';
 
-const feathers = require('feathers');
-const configuration = require('feathers-configuration');
-const hooks = require('feathers-hooks');
-const rest = require('feathers-rest');
-const socketio = require('feathers-socketio');
+import mongodb from './mongodb';
 
-const handler = require('feathers-errors/handler');
-const notFound = require('feathers-errors/not-found');
+const socket = io();
+const client = feathers();
 
-const middleware = require('./middleware');
-const services = require('./services');
-const appHooks = require('./app.hooks');
+client.configure(hooks());
+client.configure(socketio(socket));
+client.configure(mongodb());
 
-const app = feathers();
-
-// Load app configuration
-app.configure(configuration());
-// Enable CORS, security, compression, favicon and body parsing
-app.use(cors());
-app.use(helmet());
-app.use(compress());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Host the public folder
-app.use('/', feathers.static(app.get('public')));
-
-// Set up Plugins and providers
-app.configure(hooks());
-app.configure(rest());
-app.configure(socketio());
-
-// Configure other middleware (see `middleware/index.js`)
-app.configure(middleware);
-// Set up our services (see `services/index.js`)
-app.configure(services);
-// Configure a middleware for 404s and the error handler
-app.use(notFound());
-app.use(handler());
-
-app.hooks(appHooks);
-
-module.exports = app;
+export default client;

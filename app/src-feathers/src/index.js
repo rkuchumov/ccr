@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Monitor from './components/Monitor';
+
 ReactDOM.render(
-  <div>Hello</div>,
-  document.getElementById('app')
+  <Monitor />,
+  document.getElementById('render-target')
 );
