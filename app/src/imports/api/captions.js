@@ -1,19 +1,44 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 
-export const Captions = new Mongo.Collection('captions');
+const Captions = new Mongo.Collection('captions');
+const Streaming = new Mongo.Collection('streaming');
+
+export {Captions, Streaming};
 
 if (Meteor.isServer) {
-	Captions._ensureIndex({start: -1, channel: 1});
+	Meteor.publish('captions', function (channel) {
 
-	Meteor.publish('captions', function captionsPublication(channelId) {
-		return Captions.find({
-			channel: channelId
-		}, {
-			limit: 4,
-			sort: {
-				start: -1
-			}
-		});
+		var latest = Captions.find({channel: channel}, {
+				limit: 4,
+				sort: {$natural: -1}
+			});
+
+
+		return latest;
+		// console.log(latest);
+
+		// const handle = Captions.find(
+		// 	{
+		// 		channel: channel,
+		// 		_id: { $gt: latest._id },
+		// 	}, {
+		// 	// sort: {$natural: -1},
+		// 	}
+		// ).observe({
+		// 	added: (cc) => {
+		// 		this.added('captions', cc._id, cc);
+		// 	},
+		// 	removed: (cc) => {
+		// 		this.removed('captions', cc._id, cc);
+		// 	}
+		// });
+
+		// return {};
+
+		// return Captions.find({channel: channel}, {
+		// 	sort: {$natural: -1},
+		// 	limit: 1
+		// });
 	});
 }

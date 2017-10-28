@@ -5,6 +5,8 @@ export const Channels = new Mongo.Collection('channels');
 
 if (Meteor.isServer) {
 	Meteor.publish('channels', function channelsPublication() {
-		return Channels.find();
+		var l = Channels.find();
+		console.log(l);
+		return l;
 	});
 }

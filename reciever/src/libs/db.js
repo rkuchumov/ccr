@@ -56,15 +56,5 @@ function addCaption(cc) {
 
 	log.debug('Inserting ', JSON.stringify(cc));
 
-	captions.updateOne(
-		{
-			start: cc.start,
-			channel: cc.channel,
-		},
-		cc,
-		{
-			upsert: true,
-			w: 1,
-		}
-	)
+	captions.insertOne(cc)
 }

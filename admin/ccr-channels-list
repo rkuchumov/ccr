@@ -24,7 +24,8 @@ var list = (err, db) => {
 		return;
 	}
 
-	db.collection(config.collection).find({}).toArray(describe);
+	db.collection(config.collections.channels.name)
+		.find({}).toArray(describe);
 
 	db.close();
 }

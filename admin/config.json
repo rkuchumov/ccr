@@ -1,6 +1,19 @@
 {
-	"endpoint": "mongodb://127.0.0.1:27017/ccr",
-	"collection": "channels",
+	"endpoint": "mongodb://127.0.0.1:3001/meteor",
+	"collections": {
+		"captions":  {
+			"name": "captions",
+			"options": {
+				"capped": true,
+				"size": 10000000,
+				"max": 2000
+			}
+		},
+		"channels": {
+			"name": "channels",
+			"options": { }
+		}
+	},
 	"inspect": {
 		"colors": true
 	}

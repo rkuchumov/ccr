@@ -21,7 +21,7 @@ var remove = (err, db) => {
 		return;
 	}
 
-	var collection = db.collection(config.collection);
+	var collection = db.collection(config.collections.channels);
 
 	collection.removeOne({_id: args.id}, (err, r) => {
 		if (err) {

@@ -17,11 +17,7 @@ class Monitor extends Component {
   renderChannels() {
     return this.props.channels.map((channel) => {
       return (
-        <Channel
-          key={channel._id}
-          channel={channel}
-          onChannelEdit={(channel) => {this.refs.channelModal.setChannel(channel)}}
-        />
+        <Channel key={channel._id} channel={channel} />
       );
     });
   }

@@ -30,7 +30,7 @@ var create = (err, db) => {
 		updatedAt: new Date()
 	}
 
-	var collection = db.collection(config.collection);
+	var collection = db.collection(config.collections.channels.name);
 
 	collection.insertOne(channel, (err, r) => {
 		if (err) {

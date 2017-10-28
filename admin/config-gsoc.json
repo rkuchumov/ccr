@@ -1,0 +1,7 @@
+{
+	"endpoint": "mongodb://gsocdev3.ccextractor.org:27017/ccr",
+	"collection": "channels",
+	"inspect": {
+		"colors": true
+	}
+}

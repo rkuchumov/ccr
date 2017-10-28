@@ -1,0 +1,82 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var utils = require('util');
+var mongo = require('mongodb').MongoClient;
+var args = require('commander');
+
+var configFile = __dirname + '/config.json';
+var config = JSON.parse(fs.readFileSync(configFile));
+
+args.option('-i, --id [ID]', 'Channel ID to watch');
+args.option('-v, --verbose', 'Produce verbose output');
+args.parse(process.argv);
+
+if (!args.id) {
+	console.error("Channel ID (-i) is not specified");
+	process.exit(1);
+}
+
+var screen = [];
+
+var describe = (cc) => {
+	if (args.verbose) {
+		console.log(utils.inspect(cc, config.inspect));
+		return;
+	}
+
+	var found = false;
+	for (var i in screen) {
+		if (screen[i].start != cc.start)
+			continue;
+		screen[i] = cc;
+		found = true;
+
+		if (i == screen.length - 1)
+			process.stdout.write(cc.text + '\r');
+	}
+
+	if (!found) {
+		screen.push(cc);
+		console.log(cc.text);
+	}
+
+	if (screen.length > 4)
+		screen.shift();
+}
+
+var watch = (err, db) => {
+	if (err) {
+		console.error("Can not connect to MongoDB server: ", err);
+		return;
+	}
+
+	var collection = db.collection(config.collections.captions.name);
+
+	var latest = collection
+		.find({channel: args.id})
+		.sort({$natural: -1})
+		.limit(1);
+
+	latest.nextObject(function(err, doc) {
+		if (err)
+			throw err;
+
+		var query =  {
+			_id: { $gt: doc._id },
+			channel: args.id,
+		};
+
+		var options = {
+			tailable: true,
+			awaitdata: true,
+			numberOfRetries: -1
+		};
+
+		var stream = collection.find(query, options).stream();
+
+		stream.on('data', describe)
+	});
+}
+
+mongo.connect(config.endpoint, watch);
