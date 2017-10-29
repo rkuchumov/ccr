@@ -15,7 +15,7 @@ module.exports = function(config_, log_) {
 
 function bindMonitoringEvents(socket) {
 	socket.on('connect', (fd, endpoint) => {
-		log.debug(endpoint + ': ' + 'connect_delay');
+		log.debug(endpoint + ': ' + 'connect');
 	});
 
 	socket.on('connect_delay', (fd, endpoint) => {

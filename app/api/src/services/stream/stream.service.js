@@ -27,8 +27,10 @@ module.exports = function () {
       if (err)
         throw err;
 
+      var id = !doc ? 0 : doc._id;
+
       var query =  {
-        _id: { $gt: doc._id },
+        _id: { $gt: id },
       };
 
       var options = {

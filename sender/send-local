@@ -1,1 +1,13 @@
-./ccr-sender -C test1 -e tests/ccextractor -u ssdds --debug -D tcp://127.0.0.1:5000
+#!/bin/bash
+
+id=$1
+if [[ z$id == z ]]; then
+	id=test1
+fi;
+
+url=$2
+if [[ z$url == z ]]; then
+	url=tcp://127.0.0.1:5000
+fi;
+
+./ccr-sender -C $id -e tests/ccextractor -u atata --debug -D $url
