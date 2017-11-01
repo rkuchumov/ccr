@@ -2,8 +2,8 @@ version: '2'
 services:
   database: 
     build: database/
-    expose:
-      - "27017"
+    ports:
+      - "27017:27017"
     volumes:
       - data-volume:/data/db
     restart: "always"

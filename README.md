@@ -1,8 +1,33 @@
-# Real-Time CC repository
+# Real-Time Close Captions repository
 
-No time to explain, just:
-1. `docker-compose build`
-2. `docker-compose up`
-3. Open `http://localhost:8080/monitor` and create a new channel (e.g. `espn` would be an id)
-4. `cd ccr && npm install`
-5. `/ccr -D localhost:8080 -C espn -s file_to_stream.ts -v` to stream specified file to the server
+## Architecture
+
+![alt text](docs/top_lvl_arch.png)
+
+## Deployment
+
+1. Build web pages static content: `cd app && ./build.bash`
+2. Build containers: `docker-compose build`
+3. Run dontainers: `docker-compose up`
+
+## Streaming a new channel
+
+1. Specify database url in `./admin/config.json`
+2. Create a new channel (with id 'test1' and title 'Test Channel'):
+```bash
+./admin/ccr-channels-create -i test -i 'Test Channel'
+```
+4. Install package dependencies
+```bash
+cd sender && npm i
+```
+5. Start streaming:
+  * Using [CCExtractor](https://github.com/CCExtractor/ccextractor) and real workload:
+```bash
+./ccr-sender -C <channel_id> -e <ccextractor_path> -u <ccextractor_source> -D <ccr-reciever_url>
+```
+  * Using ccextractor mock that streams a single file
+```bash
+./ccr-sender -C test1 -e tests/ccextractor -u dummy_url:port  -D tcp://127.0.0.1:5000
+```
+
