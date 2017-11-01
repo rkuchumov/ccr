@@ -6,6 +6,7 @@ services:
       - "27017"
     volumes:
       - data-volume:/data/db
+    restart: "always"
 
   database-seed: 
     build: database/seed/
@@ -23,6 +24,7 @@ services:
       - CCR_MONGO_URL=mongodb://database:27017/ccr
     depends_on:
       - database
+    restart: "always"
 
   reciever:
     build: reciever/
@@ -33,6 +35,7 @@ services:
       - CCR_MONGO_URL=mongodb://database:27017/ccr
     depends_on:
       - database
+    restart: "always"
 
 volumes:
   data-volume:
