@@ -1,5 +1,5 @@
 {
-  "endpoint": "mongodb://gsocdev3.ccextractor.org:27017/ccr",
+  "endpoint": "mongodb://34.201.48.10:27017/ccr",
   "collections": {
     "captions":  {
       "name": "captions",
