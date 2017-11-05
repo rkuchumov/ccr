@@ -21,7 +21,7 @@ db.channels.updateOne(
 )
 
 db.createCollection('captions');
-db.captions.ensureIndex({start: -1, channel: 1});
+db.captions.ensureIndex({channel: 1, start: -1});
 
 db.createCollection('stream', {
   capped: true,

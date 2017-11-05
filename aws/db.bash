@@ -1,4 +1,11 @@
 #!/bin/bash
+
+logger "in db.bash"
+
+set -ex
+
+logger "repos"
+
 cat << EOF > /etc/yum.repos.d/mongodb-org-3.4.repo
 [mongodb-org-3.4]
 name=mongodb repository
@@ -8,13 +15,17 @@ enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
 EOF
 
-yum install -y mongodb-org git
+logger "yum"
+
+yum install -y mongodb-org 
 
 sed -i '/bindIp:/d' /etc/mongod.conf
 
+logger "service"
+
 service mongod start
 
-git clone https://github.com/rkuchumov/ccr /ccr
+logger "chkconfig"
 
-cd /ccr/database/seed/
-mongo mongodb://127.0.0.1:27017/ccr seed.js
+chkconfig mongod on
+
