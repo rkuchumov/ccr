@@ -5,8 +5,8 @@
       "name": "captions",
       "options": { },
       "index": {
-        "start": -1,
-        "channel": 1
+        "channel": 1,
+        "start": -1
       }
     },
     "stream": {

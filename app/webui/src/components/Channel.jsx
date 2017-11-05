@@ -38,6 +38,11 @@ class Channel extends Component {
   componentDidMount() {
     this.refs.tab.setAttribute('uk-tab', '');
 
+    // XXX: handling all events is not efficient
+    // TODO: implement pub/sub pattern
+    const stream = client.service('stream');
+    stream.on('created', cc => this.onCaptionsAdded(cc));
+
     const captions = client.service('captions');
     captions.find({
       query: {
@@ -46,11 +51,6 @@ class Channel extends Component {
         $limit: 4
       }
     }).then(items => this.setState({screen: items.data}));
-
-    // XXX: handling all events is not efficient
-    // TODO: implement pub/sub pattern
-    const stream = client.service('stream');
-    stream.on('created', cc => this.onCaptionsAdded(cc));
   }
 
   renderCaptions() {

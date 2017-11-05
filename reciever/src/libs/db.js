@@ -34,7 +34,7 @@ function connect() {
       handle = db;
 
       captions = handle.collection('captions');
-      captions.ensureIndex({start: -1, channel: 1});
+      captions.ensureIndex({channel: 1, start: -1});
 
       stream = handle.collection('stream');
 
