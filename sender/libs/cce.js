@@ -36,8 +36,7 @@ function spawn(options) {
 				return;
 			}
 
-			log.error('CCExtractor (pid ' + this.handle.pid + ') exited with code ' + code);
-
+			log.error('CCExtractor (pid ' + this.handle.pid + ') exited with code ' + code); 
 			if (config.restart > 0) {
 				log.debug('Restarting (old pid ' + this.handle.pid + ')');
 				console.log(config.restart);
@@ -48,10 +47,6 @@ function spawn(options) {
 			}
 		});
 	}
-
-	this.killed = false;
-
-	this._spawn();
 
 	this.kill = (signal) => {
 		if (this.killed) {
@@ -69,5 +64,27 @@ function spawn(options) {
 
 		// TODO: should I `delete this.handle;` ?
 	}
+
+	process.on('SIGINT', () => {
+		log.info('Got SIGINT, terminating'); 
+		this.kill('SIGKILL')
+		process.exit();
+	});
+
+	process.on('SIGTERM', () => {
+		log.info('Got SIGTERM, terminating'); 
+		this.kill('SIGKILL')
+		process.exit();
+	});
+
+	process.on('exit', () => {
+		this.kill('SIGKILL')
+		process.exit();
+	});
+
+	this.killed = false;
+
+	this._spawn();
+
 };
 
