@@ -47,7 +47,7 @@ class Channel extends Component {
     captions.find({
       query: {
         channel: this.props.channel._id,
-        $sort: { started: -1 },
+        $sort: { start: -1 },
         $limit: 4
       }
     }).then(items => this.setState({screen: items.data}));
