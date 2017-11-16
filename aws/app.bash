@@ -23,4 +23,4 @@ sed 's/CCR_HOST/localhost/' -i config/production.json
 sed 's/CCR_PORT/80/' -i config/production.json 
 sed 's/CCR_MONGO_URL/mongodb:\/\/CCR_MONGO_HOST:27017\/ccr/' -i config/production.json 
 
-NODE_ENV=production node src/index.js
+NODE_ENV=production nohup node src/index.js &

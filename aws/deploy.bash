@@ -85,9 +85,12 @@ if [ -z $RT_ID ]; then
 		--route-table-id $RT_ID \
 		--destination-cidr-block 0.0.0.0/0 \
 		--gateway-id $I_GW_ID
+
 	aws ec2 associate-route-table \
 		--subnet-id $VPC_PUBLIC_SUBNET_ID \
-		--route-table-id $RT_ID
+		--route-table-id $RT_ID > $TMP
+	RT_ASSOC_ID=$(cat $TMP | jq -r '.AssociationId')
+	echo RT_ASSOC_ID=$RT_ASSOC_ID >> $PROGRESS
 fi
 
 if [ -z $SG_APP_ID ]; then
@@ -231,7 +234,20 @@ if [ -z $APP_INST_ID ] || [ -z $APP_INST_IP ]; then
 	echo APP_INST_IP=$APP_INST_IP >> $PROGRESS
 fi
 
-aws ec2 describe-instances --instance-ids $TUNERS_INST_ID | jq -r '.Reservations[0].Instances[0].PublicIpAddress'
-aws ec2 describe-instances --instance-ids $APP_INST_ID | jq -r '.Reservations[0].Instances[0].PublicIpAddress'
+TUNERS_INST_IP_PUB=$(aws ec2 describe-instances --instance-ids $TUNERS_INST_ID | jq -r '.Reservations[0].Instances[0].PublicIpAddress')
+APP_INST_IP_PUB=$(aws ec2 describe-instances --instance-ids $APP_INST_ID | jq -r '.Reservations[0].Instances[0].PublicIpAddress')
 
+until nc -vz $TUNERS_INST_IP_PUB 5000
+do
+	sleep $RETRY_DELAY
+done
+
+until nc -vz $APP_INST_IP_PUB 80
+do
+	sleep $RETRY_DELAY
+done
+
+echo Reciever at tcp://$TUNERS_INST_IP_PUB:5000/
+echo Web app at http://$APP_INST_IP_PUB/
+echo "Done."
 date
