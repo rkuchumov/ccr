@@ -4,11 +4,14 @@
 
 ![alt text](docs/top_lvl_arch.png)
 
-## Deployment
+## Deployment using Docker
 
 1. Build web pages static content: `cd app && ./build.bash`
 2. Build containers: `docker-compose build`
 3. Run dontainers: `docker-compose up`
+
+## Deployment using Kubernetes
+1. kubectl create -f app-deployment.yaml,app-service.yaml,data-volume-persistentvolumeclaim.yaml,database-deployment.yaml,database-seed-deployment.yaml,database-seed-service.yaml,database-service.yaml,reciever-deployment.yaml,reciever-service.yaml
 
 ## Streaming a new channel
 
