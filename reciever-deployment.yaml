@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.6.0 (e4adfef)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: reciever
+  name: reciever
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: reciever
+    spec:
+      containers:
+      - env:
+        - name: CCR_MONGO_URL
+          value: mongodb://database:27017/ccr
+        - name: CCR_SOURCE
+          value: tcp://*:5000
+        image: reciever
+        name: reciever
+        ports:
+        - containerPort: 5000
+        resources: {}
+      restartPolicy: Always
+     loadBalancerSourceRanges:
+       - 192.168.0.1/24
+     hard:
+      requests.cpu: "1"
+      requests.memory: 1Gi
+      limits.cpu: "2"
+      limits.memory: 2Gi    
+status: {}

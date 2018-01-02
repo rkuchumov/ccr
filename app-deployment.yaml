@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.6.0 (e4adfef)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app
+  name: app
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app
+    spec:
+      containers:
+      - env:
+        - name: CCR_HOST
+          value: localhost
+        - name: CCR_MONGO_URL
+          value: mongodb://database:27017/ccr
+        - name: CCR_PORT
+          value: "80"
+        - name: NODE_ENV
+          value: production
+        image: app
+        name: app
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}
