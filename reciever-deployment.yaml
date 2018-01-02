@@ -31,4 +31,9 @@ spec:
       restartPolicy: Always
      loadBalancerSourceRanges:
        - 192.168.0.1/24
+   hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi    
 status: {}
