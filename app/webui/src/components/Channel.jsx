@@ -66,7 +66,7 @@ class Channel extends Component {
 
           <div className="uk-position-relative sortable-handle">
             <ul ref="tab" className="uk-flex-right uk-margin-remove-bottom">
-              <li className="uk-active"><a href="#">Captions</a></li>
+              <li className="uk-active"><a href="">Captions</a></li>
             </ul>
             <div className="uk-position-top-left">
               <h4 className="uk-h4 uk-margin-remove-top uk-margin-remove-bottom uk-display-inline ">
