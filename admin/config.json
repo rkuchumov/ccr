@@ -1,5 +1,5 @@
 {
-  "endpoint": "mongodb://database:27017/ccr",
+  "endpoint": "mongodb://172.17.0.2:27017/ccr",
   "collections": {
     "captions":  {
       "name": "captions",
