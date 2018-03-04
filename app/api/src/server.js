@@ -30,8 +30,9 @@ server.use(compress());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
-if (server.get('public') !== "")
+if (server.get('public') !== ''){
   server.use('/', feathers.static(server.get('public')));
+}
 
 // Set up Plugins and providers
 server.configure(hooks());
