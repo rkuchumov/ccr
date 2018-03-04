@@ -2,7 +2,7 @@
   "name": "server",
   "description": "",
   "version": "0.0.0",
-  "homepage": "http://localhost:8080/",
+  "homepage": "",
   "main": "src",
   "keywords": [
     "feathers"
@@ -41,7 +41,6 @@
     "feathers-socketio": "^2.0.0",
     "helmet": "^3.9.0",
     "mongodb": "^2.2.33",
-    "path": "^0.12.7",
     "serve-favicon": "^2.4.5",
     "winston": "^2.4.0"
   },

@@ -71,7 +71,7 @@ class Channel extends Component {
                 <li className="uk-active"><a href="">Captions</a></li>
               </ul>
               <div className="uk-position-top-left">
-              <h4 className="uk-h4 uk-margin-remove-top uk-margin-remove-bottom uk-display-inline ">
+                <h4 className="uk-h4 uk-margin-remove-top uk-margin-remove-bottom uk-display-inline ">
                   <a ref="editChannel" href="#channel-modal"
                     className="uk-link-muted">
                     {this.props.channel.title}

@@ -31,7 +31,6 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
 if (server.get('public') !== ''){
-  console.log('y');
   server.use('/', feathers.static(server.get('public')));
 }
 
